@@ -4,12 +4,12 @@ import {
     View, 
     Text, 
     TextInput, 
-    Button,
     TouchableHighlight,
     ImageBackground,
     } from 'react-native';
 import { connect } from 'react-redux';
 import { changeEmail, changePassword } from '../actions/AuthenticationActions';
+TextInput.defaultProps.selectionColor = 'white';
 
 const formLogin = props => {
     return (
@@ -34,12 +34,14 @@ const formLogin = props => {
                     </TouchableHighlight>
                 </View>
                 <View style={styles.vwAcessar}>
-                    <Button 
-                        title='Login'
-                        color='#FFF'
-                        accessibilityLabel='Click to validate access.'
-                        onPress={()=>false}
-                    />
+                    <TouchableHighlight 
+                        underlayColor='#115E54' 
+                        activeOpacity={0.3} 
+                        onPress={()=>false}>
+                            <Text style={styles.btn}>
+                                Login
+                            </Text>
+                    </TouchableHighlight>
                 </View>
             </View>
         </ImageBackground>    
@@ -72,8 +74,13 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: '#FFF',
     },
+    btn: {
+        fontSize: 18,
+        color: '#FFF',
+    },
     vwAcessar: {
         flex: 2,
+        alignItems: 'center',
     },
 });
 

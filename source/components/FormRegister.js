@@ -3,11 +3,13 @@ import {
     StyleSheet, 
     View, 
     TextInput, 
-    Button,
+    Text,
+    TouchableHighlight,
     ImageBackground, } 
     from 'react-native';
 import { connect } from 'react-redux';
 import { changeName, changeEmail, changePassword } from '../actions/AuthenticationActions';
+TextInput.defaultProps.selectionColor = 'white';
 
 const formRegister = props => {
     return (
@@ -19,12 +21,14 @@ const formRegister = props => {
                     <TextInput secureTextEntry value={props.password} style={styles.dados} placeholder='Password' placeholderTextColor='#FFF' onChangeText={password => props.changePassword(password)} />
                 </View>
                 <View style={styles.vwCadastrar}>
-                    <Button 
-                        title='Register'
-                        color='#FFF'
-                        accessibilityLabel='Click to include user.'
-                        onPress={()=>false}
-                    />
+                    <TouchableHighlight 
+                        underlayColor='#115E54' 
+                        activeOpacity={0.3} 
+                        onPress={()=>false}>
+                            <Text style={styles.btn}>
+                                Register
+                            </Text>
+                    </TouchableHighlight>
                 </View>
             </View>
         </ImageBackground>
@@ -45,8 +49,13 @@ const styles = StyleSheet.create({
         height: 45,
         color: '#FFF',
     },
+    btn: {
+        fontSize: 18,
+        color: '#FFF',
+    },
     vwCadastrar: {
         flex: 1,
+        alignItems: 'center',
     },
 });
 
