@@ -6,38 +6,45 @@ import {
     TextInput, 
     Button,
     TouchableHighlight,
+    ImageBackground,
     } from 'react-native';
+import { connect } from 'react-redux';
+import { changeEmail, changePassword } from '../actions/AuthenticationActions';
 
-export default props => (
-    <View style={styles.tela}>
-        <View style={styles.vwTitulo}>
-            <Text style={styles.titulo}>
-                WhatsApp Clone
-            </Text>
-        </View>
-        <View style={styles.vwDados}>
-            <TextInput style={styles.dados} placeholder='E-mail' />
-            <TextInput style={styles.dados} placeholder='Senha' />
-            <TouchableHighlight 
-                underlayColor='#115E54' 
-                activeOpacity={0.3} 
-                onPress={() => props.navigation.navigate('CadUsuario')}
-            >
-                <Text style={styles.txtCad}>
-                    Ainda não tem cadastro? Cadastre-se
-                </Text>
-            </TouchableHighlight>
-        </View>
-        <View style={styles.vwAcessar}>
-            <Button 
-                title='Acessar'
-                color='#115E54'
-                accessibilityLabel='Pressione para validar o acesso.'
-                onPress={()=>false}
-            />
-        </View>
-    </View>
-);
+const formLogin = props => {
+    return (
+        <ImageBackground style={{ flex: 1, width: null, }} source={require('../images/bg.png')} >
+            <View style={styles.tela}>
+                <View style={styles.vwTitulo}>
+                    <Text style={styles.titulo}>
+                        WhatsApp Clone
+                    </Text>
+                </View>
+                <View style={styles.vwDados}>
+                    <TextInput value={props.email} style={styles.dados} placeholder='E-mail' placeholderTextColor='#FFF' onChangeText={email => props.changeEmail(email)} />
+                    <TextInput secureTextEntry value={props.password} style={styles.dados} placeholder='Password' placeholderTextColor='#FFF' onChangeText={password => props.changePassword(password)} />
+                    <TouchableHighlight 
+                        underlayColor='#115E54' 
+                        activeOpacity={0.3} 
+                        onPress={() => props.navigation.navigate('RegisterUser')}
+                    >
+                        <Text style={styles.txtCad}>
+                            New user? Register
+                        </Text>
+                    </TouchableHighlight>
+                </View>
+                <View style={styles.vwAcessar}>
+                    <Button 
+                        title='Login'
+                        color='#FFF'
+                        accessibilityLabel='Click to validate access.'
+                        onPress={()=>false}
+                    />
+                </View>
+            </View>
+        </ImageBackground>    
+    );
+}
 
 const styles = StyleSheet.create({
     tela: {
@@ -51,6 +58,7 @@ const styles = StyleSheet.create({
     },
     titulo: {
         fontSize: 25,
+        color: '#FFF',
     },
     vwDados: {
         flex: 2,
@@ -58,11 +66,22 @@ const styles = StyleSheet.create({
     dados: {
         fontSize: 20,
         height: 45,
+        color: '#FFF',
     },
     txtCad: {
         fontSize: 18,
+        color: '#FFF',
     },
     vwAcessar: {
         flex: 2,
     },
 });
+
+const mapStateToProps = state => (
+    {
+        email: state.AuthenticationReducer.email,
+        password: state.AuthenticationReducer.password,
+    }
+)
+
+export default connect(mapStateToProps, { changeEmail, changePassword })(formLogin);
